@@ -11,11 +11,14 @@ async function playersOnline() {
     content = document.getElementById("pagoderaPlayersOnline");
     content.innerHTML = "?";
     url = "https://api.pagodera.com/api/v1/online"
-    let response = await fetch(url);
-    if (response.status === 200) {
-        let data = await response.text();
-        content.innerHTML = JSON.parse(data).online;
-    }
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
+    .then((response) => response.json())
+    .then((data) => {
+        content.innerHTML = JSON.parse(data.contents).online;;
+    })
+    .catch((error) => {
+        content.innerHTML = error;
+    });
 }
 
 playersOnline();
